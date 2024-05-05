@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
 
-// Define a class for journal entries
 class Entry
 {
     public string Prompt { get; set; }
     public string Response { get; set; }
     public string Date { get; set; }
 
-    // Constructor to initialize Entry objects
+    // initialize entry objects
     public Entry(string prompt, string response, string date)
     {
         Prompt = prompt;
@@ -18,7 +17,7 @@ class Entry
         Date = date;
     }
 
-    // Method to format the entry for display
+    // format the entry for display
     public override string ToString()
     {
         string formattedDate = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
@@ -26,25 +25,25 @@ class Entry
     }
 }
 
-// Define a class to manage the journal
+// class to manage the journal
 class Journal
 {
     private List<Entry> entries;
 
-    // Constructor to initialize the journal with an empty list of entries
+    
     public Journal()
     {
         entries = new List<Entry>();
     }
 
-    // Method to add a new entry to the journal
+    // add a new entry to the journal
     public void AddEntry(string prompt, string response, string date)
     {
         Entry newEntry = new Entry(prompt, response, date);
         entries.Add(newEntry);
     }
 
-    // Method to display all entries in the journal
+    // display all entries in the journal
     public void DisplayEntries()
     {
         foreach (Entry entry in entries)
@@ -53,7 +52,7 @@ class Journal
         }
     }
 
-    // Method to save the journal to a file
+    // save the journal to a file
     public void SaveToFile(string filename)
     {
         using (StreamWriter writer = new StreamWriter(filename))
@@ -65,10 +64,10 @@ class Journal
         }
     }
 
-    // Method to load entries from a file
+    // load entries from a file
     public void LoadFromFile(string filename)
     {
-        entries.Clear(); // Clear existing entries before loading from file
+        entries.Clear(); // clear existing entries before loading from file
 
         using (StreamReader reader = new StreamReader(filename))
         {
@@ -85,7 +84,7 @@ class Journal
     }
 }
 
-// Main program class
+// Main
 class Program
 {
     static void Main(string[] args)
@@ -145,20 +144,20 @@ class Program
         int index = random.Next(prompts.Count);
         string prompt = prompts[index];
 
-        // Get response from user
+        // get response from user
         Console.WriteLine($"Prompt: {prompt}");
         Console.Write("Your response: ");
         string response = Console.ReadLine();
 
-        // Get current date and time
+        // get the date and time
         string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-        // Add entry to journal
+        // add entry to journal
         journal.AddEntry(prompt, response, date);
         Console.WriteLine("Entry added to journal.");
     }
 
-    // Method to save the journal to a file
+    // save the journal to a file
     static void SaveJournalToFile(Journal journal)
     {
         Console.Write("Enter filename to save the journal: ");
@@ -167,7 +166,7 @@ class Program
         Console.WriteLine("Journal saved to file successfully.");
     }
 
-    // Method to load the journal from a file
+    // load the journal from a file
     static void LoadJournalFromFile(Journal journal)
     {
         Console.Write("Enter filename to load the journal: ");
