@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Globalization;
 
+// Represents a single journal entry
 class Entry
 {
-    public string Prompt { get; set; }
-    public string Response { get; set; }
-    public string Date { get; set; }
+    public string Prompt { get; set; } // Prompt for the entry
+    public string Response { get; set; } // Response to the prompt
+    public string Date { get; set; } // Date and time of the entry
 
-    // initialize entry objects
+    // Constructor to initialize entry properties
     public Entry(string prompt, string response, string date)
     {
         Prompt = prompt;
@@ -17,33 +18,35 @@ class Entry
         Date = date;
     }
 
-    // format the entry for display
+    // Format the entry for display
     public override string ToString()
     {
-        string formattedDate = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture).ToString("MM/dd/yyyy");
+        // Format date to MM/dd/yyyy
+        string formattedDate = DateTime.ParseExact(Date, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+                                        .ToString("MM/dd/yyyy");
         return $"Date: {formattedDate} - Prompt: {Prompt}\n\t{Response}\n";
     }
 }
 
-// class to manage the journal
+// Manages a collection of journal entries
 class Journal
 {
-    private List<Entry> entries;
+    private List<Entry> entries; // List to store journal entries
 
-    
+    // Constructor to initialize the journal
     public Journal()
     {
         entries = new List<Entry>();
     }
 
-    // add a new entry to the journal
+    // Add a new entry to the journal
     public void AddEntry(string prompt, string response, string date)
     {
         Entry newEntry = new Entry(prompt, response, date);
         entries.Add(newEntry);
     }
 
-    // display all entries in the journal
+    // Display all entries in the journal
     public void DisplayEntries()
     {
         foreach (Entry entry in entries)
@@ -52,9 +55,10 @@ class Journal
         }
     }
 
-    // save the journal to a file
+    // Save the journal to a file
     public void SaveToFile(string filename)
     {
+        // Write entries to the file in the format: Date|Prompt|Response
         using (StreamWriter writer = new StreamWriter(filename))
         {
             foreach (Entry entry in entries)
@@ -64,11 +68,12 @@ class Journal
         }
     }
 
-    // load entries from a file
+    // Load entries from a file
     public void LoadFromFile(string filename)
     {
-        entries.Clear(); // clear existing entries before loading from file
+        entries.Clear(); // Clear existing entries before loading from file
 
+        // Read entries from the file and add them to the journal
         using (StreamReader reader = new StreamReader(filename))
         {
             string line;
@@ -84,47 +89,50 @@ class Journal
     }
 }
 
-// Main
+// Main program
 class Program
 {
+    // Entry point of the program
     static void Main(string[] args)
     {
-        Journal journal = new Journal();
+        Journal journal = new Journal(); // Create a new journal object
         string choice;
 
         // Main menu loop
         do
         {
+            // Display menu options
             Console.WriteLine("\n1. Write");
             Console.WriteLine("2. Display");
             Console.WriteLine("3. Save");
             Console.WriteLine("4. Load");
             Console.WriteLine("5. Exit");
             Console.Write("What would you like to do? ");
-            choice = Console.ReadLine();
+            choice = Console.ReadLine(); // Read user choice
 
+            // Perform action based on user choice
             switch (choice)
             {
-                case "1":
+                case "1": // Write a new entry
                     WriteNewEntry(journal);
                     break;
-                case "2":
+                case "2": // Display all entries
                     journal.DisplayEntries();
                     break;
-                case "3":
+                case "3": // Save entries to a file
                     SaveJournalToFile(journal);
                     break;
-                case "4":
+                case "4": // Load entries from a file
                     LoadJournalFromFile(journal);
                     break;
-                case "5":
+                case "5": // Exit the program
                     Console.WriteLine("Exiting program.");
                     break;
                 default:
                     Console.WriteLine("Invalid option. Please try again.");
                     break;
             }
-        } while (choice != "5");
+        } while (choice != "5"); // Continue until the user chooses to exit
     }
 
     // Method to write a new entry
@@ -144,20 +152,20 @@ class Program
         int index = random.Next(prompts.Count);
         string prompt = prompts[index];
 
-        // get response from user
+        // Prompt user for response
         Console.WriteLine($"Prompt: {prompt}");
         Console.Write("Your response: ");
         string response = Console.ReadLine();
 
-        // get the date and time
+        // Get current date and time
         string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-        // add entry to journal
+        // Add entry to the journal
         journal.AddEntry(prompt, response, date);
         Console.WriteLine("Entry added to journal.");
     }
 
-    // save the journal to a file
+    // Save the journal to a file
     static void SaveJournalToFile(Journal journal)
     {
         Console.Write("Enter filename to save the journal: ");
@@ -166,7 +174,7 @@ class Program
         Console.WriteLine("Journal saved to file successfully.");
     }
 
-    // load the journal from a file
+    // Load the journal from a file
     static void LoadJournalFromFile(Journal journal)
     {
         Console.Write("Enter filename to load the journal: ");
