@@ -19,14 +19,14 @@ class ListingActivity : Activity
     {
         Random random = new Random();
         string prompt = prompts[random.Next(prompts.Count)];
-        Console.WriteLine(prompt);
-
-        Console.WriteLine("You have a few seconds to prepare...");
         ShowSpinner(5);
+        Console.WriteLine("\nList as many responses you can to the following prompt: ");
+        Console.WriteLine(prompt);
+        Console.Write("You may begin: ");
+        ShowCountdown(5);
 
-        Console.WriteLine("Start listing items:");
 
-        int elapsed = 0;
+    
         int itemCount = 0;
         DateTime endTime = DateTime.Now.AddSeconds(duration);
 
@@ -35,7 +35,6 @@ class ListingActivity : Activity
             Console.Write("> ");
             Console.ReadLine();
             itemCount++;
-            elapsed += 1;
         }
 
         Console.WriteLine($"You listed {itemCount} items.");

@@ -5,12 +5,12 @@ class Program
         while (true)
         {
             Console.Write("\u001b[2J");
-            Console.WriteLine("Choose an activity:");
-            Console.WriteLine("1. Breathing");
-            Console.WriteLine("2. Reflection");
-            Console.WriteLine("3. Listing");
+            Console.WriteLine("Menu Options:");
+            Console.WriteLine("1. Start Breathing Activity");
+            Console.WriteLine("2. Start Reflection Activity");
+            Console.WriteLine("3. Start Listing Activity");
             Console.WriteLine("4. Quit");
-            Console.Write("Enter your choice: ");
+            Console.Write("Select a choice from the menu: ");
             string choice = Console.ReadLine();
 
             Activity activity = null;
@@ -49,17 +49,19 @@ abstract class Activity
     public void StartActivity()
     {
         Console.Write("\u001b[2J");
-        Console.WriteLine($"Starting {name}...");
+        Console.WriteLine($"Welcome to the {name} Activity...");
         Console.WriteLine(description);
-        Console.Write("Enter duration of the activity in seconds: ");
+        Console.Write("How long, in seconds, would you like for your session? ");
         duration = int.Parse(Console.ReadLine());
+        Console.Write("\u001b[2J");
 
-        Console.WriteLine("Prepare to begin...");
+
+        Console.WriteLine("Get Ready...");
         ShowSpinner(3);
 
         RunActivity();
 
-        Console.WriteLine("Good job!");
+        Console.WriteLine("Well Done!");
         Console.WriteLine($"You have completed the {name} activity for {duration} seconds.");
         ShowSpinner(3);
     }
@@ -74,22 +76,26 @@ abstract class Activity
         animationStrings.Add("-");
         animationStrings.Add("\\");
 
-        foreach (string s in animationStrings)
-        {
-            Console.Write(s);
-            Thread.Sleep(1000);
-            Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-            Console.Write(" ");
-        }
+        int iterations = seconds * 1000 / 500;
 
+        for (int i = 0; i < iterations; i++)
+        {
+            foreach (string s in animationStrings)
+            {
+                Console.Write(s);
+                Thread.Sleep(100);
+                Console.Write("\b \b");
+            }
+        }
     }
 
     protected void ShowCountdown(int seconds)
     {
         for (int i = seconds; i > 0; i--)
         {
-            Console.Write(".");
+            Console.Write(i);
             Thread.Sleep(1000);
+            Console.Write("\b \b");
         }
     }
 }

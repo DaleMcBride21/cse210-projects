@@ -31,15 +31,21 @@ class ReflectionActivity : Activity
     {
         Random random = new Random();
         string prompt = prompts[random.Next(prompts.Count)];
-        Console.WriteLine(prompt);
+        Console.WriteLine("\nConsidor the following prompt: ");
+        Console.WriteLine($"\n{prompt}");
+        Console.WriteLine("\nWhen you have something in mind, press enter to continue.");
+        Console.ReadLine();
+        Console.WriteLine("Now ponder on each of the following questions as they related to this experience.");
+        Console.WriteLine("You may begin in: ");
+        ShowCountdown(5);
 
         int elapsed = 0;
         while (elapsed < duration)
         {
             string question = questions[random.Next(questions.Count)];
-            Console.WriteLine(question);
-            ShowSpinner(5);
-            elapsed += 5;
+            Console.WriteLine($"\n{question}");
+            ShowSpinner(10);
+            elapsed += 10;
         }
     }
 }
